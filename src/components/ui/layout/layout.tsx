@@ -1,10 +1,10 @@
 import { ReactElement } from "react";
 import { Outlet, useOutletContext } from "react-router-dom";
 import * as React from "react";
-import { FileUploader } from "./file-uploader";
-import { Header } from "./header";
-import { DataTable } from "./data-table";
-import { columns } from "./colums";
+import { FileUploader } from "../uploader/file-uploader";
+import { Header } from "../commons/header";
+import { DataTable } from "../table/data-table";
+import { columns } from "../table/colums";
 
 type ContextType = { user: { name: string } | null };
 
