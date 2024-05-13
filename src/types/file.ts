@@ -12,7 +12,7 @@ type Status = "success" | "fail";
 type FileContextState = {
   isLoading: boolean;
   file: File | null;
-  fileList: FileUploadedRecord[] | null; // & {} You can add more information about the challenge inside this type
+  fileList: FileUploadedRecord[] | null;
 };
 
 type FileAction = ReducerAction<FileActionType, Partial<FileContextState>>;
@@ -27,8 +27,7 @@ type FileContextType = {
 type FileProviderProps = { children: ReactNode };
 
 type CreateFile = {
-  name: string;
-  status: Status;
+  formData: FormData;
 };
 
 type FileUploadedRecord = CreateFile & {

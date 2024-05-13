@@ -10,7 +10,10 @@ export class FileApi {
     return await api.get("/file-list");
   }
 
-  async createFile(body: CreateFile) {
-    return await api.post("/file-create", body);
+  async uploadFile(body: any, headers: Record<string, string> = {}) {
+    const config = {
+      headers: { ...headers },
+    };
+    return await api.post("/file-upload", body, config);
   }
 }

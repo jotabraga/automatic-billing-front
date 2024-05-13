@@ -5,7 +5,7 @@ import { FileUploader } from "../uploader/file-uploader";
 import { Header } from "../commons/header";
 import { DataTable } from "../table/data-table";
 import { columns } from "../table/colums";
-import { FileApi } from "@/hooks/fileApi";
+import { FileApi } from "@/hooks/useFileApi";
 import { FileUploadedRecord } from "@/types";
 
 export function Layout(): ReactElement {

@@ -1,4 +1,4 @@
-import { FileContext, useFile } from "@/hooks/fileReducer";
+import { FileContext, useFile } from "@/hooks/useFileContext";
 import { ReactNode } from "react";
 
 interface FileProviderProps {
