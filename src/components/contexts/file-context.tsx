@@ -3,6 +3,7 @@ import { FileUploadedRecord } from "@/types";
 
 enum FileActionType {
   updateFileUploadList = "UPDATE_FILE_UPLOAD_LIST",
+  updateFile = "UPDATE_FILE",
 }
 
 type ReducerAction<T, P> = {
