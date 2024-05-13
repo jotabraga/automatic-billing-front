@@ -6,23 +6,25 @@ import { Header } from "../commons/header";
 import { DataTable } from "../table/data-table";
 import { columns } from "../table/colums";
 import { FileApi } from "@/hooks/useFileApi";
-import { FileUploadedRecord } from "@/types";
+import { useFileContext, FileActionType } from "@/hooks/useFileContext";
 
 export function Layout(): ReactElement {
-  // const [state, dispatch] = useFileContext();
-  const [filesList, setFilesList] = React.useState<FileUploadedRecord[] | null>(
-    []
-  );
+  const { state, dispatch } = useFileContext();
 
   const api = new FileApi();
 
+  const fetchFileList = async () => {
+    await api.getFileList().then((response) => {
+      console.log("response", response.data);
+      dispatch({
+        type: FileActionType.updateFileList,
+        payload: { fileList: response.data },
+      });
+    });
+  };
+
   React.useEffect(() => {
-    api
-      .getFileList()
-      .then((response) => {
-        setFilesList(response.data);
-      })
-      .catch((error) => console.error(error.message));
+    fetchFileList();
   }, []);
 
   return (
@@ -44,8 +46,8 @@ export function Layout(): ReactElement {
         <Header />
 
         <FileUploader />
-        <DataTable columns={columns} data={filesList} />
-        <Outlet context={[filesList, setFilesList]} />
+        <DataTable columns={columns} data={state.fileList} />
+        <Outlet context={[state.fileList]} />
       </main>
     </>
   );

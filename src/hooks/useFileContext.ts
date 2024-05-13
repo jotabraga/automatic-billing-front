@@ -1,14 +1,14 @@
 import { FileContextState, FileUploadedRecord } from "@/types";
 import { createContext, useContext, useReducer } from "react";
 
-enum FileActionType {
-  updateFileUploadList = "UPDATE_FILE_UPLOAD_LIST",
-  updateFile = "UPDATE_FILE",
+export enum FileActionType {
+  updateFileList = "UPDATE_FILE_UPLOAD_LIST",
+  addRecordToFileList = "UPDATE_FILE",
 }
 
 type ReducerAction<T, P> = {
   type: T;
-  payload?: Partial<P>;
+  payload: Partial<P>;
 };
 
 type FileAction = ReducerAction<FileActionType, Partial<FileContextState>>;
@@ -21,9 +21,11 @@ export const FileContextInitialValues: FileContextState = {
 
 export function reducer(state: FileContextState, action: FileAction) {
   switch (action.type) {
-    case FileActionType.updateFile:
-      return { ...state };
-    case FileActionType.updateFileUploadList:
+    case FileActionType.updateFileList:
+      state.fileList = action.payload.fileList ?? null;
+      return state;
+
+    case FileActionType.addRecordToFileList:
       return { ...state };
     default:
       return state;
@@ -37,6 +39,4 @@ export function useFile() {
 
 export const FileContext = createContext({});
 
-export function useCountContext() {
-  return useContext(FileContext);
-}
+export const useFileContext = () => useContext(FileContext);
