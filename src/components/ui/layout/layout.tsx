@@ -1,28 +1,40 @@
 import { ReactElement } from "react";
-import { Outlet, useOutletContext } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import * as React from "react";
 import { FileUploader } from "../uploader/file-uploader";
 import { Header } from "../commons/header";
 import { DataTable } from "../table/data-table";
 import { columns } from "../table/colums";
-
-type ContextType = { user: { name: string } | null };
+import { FileApi } from "@/hooks/fileApi";
+import { FileUploadedRecord } from "@/types";
 
 export function Layout(): ReactElement {
-  const [user, setUser] = React.useState<{ name: string } | null>(null);
+  // const [state, dispatch] = useFileContext();
+  const [filesList, setFilesList] = React.useState<FileUploadedRecord[] | null>(
+    []
+  );
 
-  function useUser() {
-    return useOutletContext<ContextType>();
-  }
+  const api = new FileApi();
 
-  const mockedData = [{ name: "cobranca.csv", date: "08/05/2024" }];
+  React.useEffect(() => {
+    api
+      .getFileList()
+      .then((response) => {
+        setFilesList(response.data);
+      })
+      .catch((error) => console.error(error.message));
+  }, []);
 
   return (
     <>
       <main className="p-6 flex flex-col gap-8 justify-center items-center h-screen">
         <a href="./" data-framer-page-link-current="true">
-          <div data-framer-background-image-wrapper="true">
+          <div
+            className="fixed top-10 left-10"
+            data-framer-background-image-wrapper="true"
+          >
             <img
+              className="h-10"
               decoding="async"
               src="https://framerusercontent.com/images/f0btmN2GtVDhwuoOUM5xAjorM.png"
               alt=""
@@ -32,8 +44,8 @@ export function Layout(): ReactElement {
         <Header />
 
         <FileUploader />
-        <DataTable columns={columns} data={mockedData} />
-        <Outlet context={{ user } satisfies ContextType} />
+        <DataTable columns={columns} data={filesList} />
+        <Outlet context={[filesList, setFilesList]} />
       </main>
     </>
   );

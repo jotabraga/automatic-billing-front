@@ -7,6 +7,7 @@ type ReducerAction<T, P> = {
   payload?: Partial<P>;
 };
 
+type Status = "success" | "fail";
 
 type FileContextState = {
   isLoading: boolean;
@@ -14,10 +15,7 @@ type FileContextState = {
   fileList: File[]; // & {} You can add more information about the challenge inside this type
 };
 
-type FileAction = ReducerAction<
-  FileActionType,
-  Partial<FileContextState>
->;
+type FileAction = ReducerAction<FileActionType, Partial<FileContextState>>;
 
 type FileDispatch = ({ type, payload }: FileAction) => void;
 
@@ -28,6 +26,15 @@ type FileContextType = {
 
 type FileProviderProps = { children: ReactNode };
 
+type CreateFile = {
+  name: string;
+  status: Status;
+};
+
+type FileUploadedRecord = CreateFile & {
+  created_at: string;
+};
+
 export type {
   FileActionType,
   FileContextState,
@@ -35,4 +42,6 @@ export type {
   FileDispatch,
   FileContextType,
   FileProviderProps,
-}
+  CreateFile,
+  FileUploadedRecord,
+};

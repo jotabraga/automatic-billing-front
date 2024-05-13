@@ -4,7 +4,8 @@ import { ColumnDef } from "@tanstack/react-table";
 
 export type UploadedFile = {
   name: string;
-  date: string;
+  status: string;
+  created_at: string;
 };
 
 export const columns: ColumnDef<UploadedFile>[] = [
@@ -13,7 +14,11 @@ export const columns: ColumnDef<UploadedFile>[] = [
     header: "File name",
   },
   {
-    accessorKey: "date",
+    accessorKey: "status",
+    header: "Status",
+  },
+  {
+    accessorKey: "created_at",
     header: "Uploaded at",
   },
 ];
