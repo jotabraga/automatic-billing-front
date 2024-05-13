@@ -12,7 +12,7 @@ type Status = "success" | "fail";
 type FileContextState = {
   isLoading: boolean;
   file: File | null;
-  fileList: File[]; // & {} You can add more information about the challenge inside this type
+  fileList: FileUploadedRecord[] | null; // & {} You can add more information about the challenge inside this type
 };
 
 type FileAction = ReducerAction<FileActionType, Partial<FileContextState>>;
