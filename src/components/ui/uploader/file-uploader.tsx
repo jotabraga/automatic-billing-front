@@ -1,16 +1,20 @@
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { FileApi } from "@/hooks/useFileApi";
+import { FileActionType, useFileContext } from "@/hooks/useFileContext";
 
 const FileUploader = () => {
+  const { state, dispatch } = useFileContext();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handleFileChange = (event: any) => {
-    setSelectedFile(event.target.files[0]);
+    if (event.target.files && event.target.files.length > 0) {
+      setSelectedFile(event.target.files[0]);
+    }
   };
 
-  const handleFileUpload = () => {
+  const handleFileUpload = async () => {
     const formData = new FormData();
-    formData.append("file", selectedFile);
+    formData.append("file", selectedFile as Blob);
 
     const api = new FileApi();
 
@@ -18,16 +22,12 @@ const FileUploader = () => {
       "Content-Type": "multipart/form-data",
     };
 
-    api
-      .uploadFile(formData, headers)
-      .then((response) => {
-        // Tratar a resposta do servidor, se necessário
-        console.log("Arquivo enviado com sucesso:", response.data);
-      })
-      .catch((error: any) => {
-        // Tratar erros de requisição, se necessário
-        console.error("Erro ao enviar arquivo:", error);
-      });
+    const response = await api.uploadFile(formData, headers);
+    const newFileRecord = response.data ?? null;
+    dispatch({
+      type: FileActionType.updateFileList,
+      payload: { FileList: [...state.fileList, newFileRecord] },
+    });
   };
 
   return (
