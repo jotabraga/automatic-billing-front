@@ -15,7 +15,6 @@ export function Layout(): ReactElement {
 
   const fetchFileList = async () => {
     await api.getFileList().then((response) => {
-      console.log("response", response.data);
       dispatch({
         type: FileActionType.updateFileList,
         payload: { fileList: response.data },

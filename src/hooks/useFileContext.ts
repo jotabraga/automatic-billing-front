@@ -22,8 +22,7 @@ export const FileContextInitialValues: FileContextState = {
 export function reducer(state: FileContextState, action: FileAction) {
   switch (action.type) {
     case FileActionType.updateFileList:
-      state.fileList = action.payload.fileList ?? null;
-      return state;
+      return { ...state, fileList: action.payload.fileList ?? state.fileList };
 
     case FileActionType.addRecordToFileList:
       return { ...state };
