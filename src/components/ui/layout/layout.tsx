@@ -28,7 +28,7 @@ export function Layout(): ReactElement {
 
   return (
     <>
-      <main className="p-6 flex flex-col gap-8 justify-center items-center h-screen">
+      <main className="flex flex-col gap-8 items-center h-screen py-20">
         <a href="./" data-framer-page-link-current="true">
           <div
             className="fixed top-10 left-10"
@@ -44,7 +44,7 @@ export function Layout(): ReactElement {
         </a>
         <Header />
 
-        <FileUploader />
+        <FileUploader state={state} dispatch={dispatch} />
         <DataTable columns={columns} data={state.fileList} />
         <Outlet context={[state.fileList]} />
       </main>

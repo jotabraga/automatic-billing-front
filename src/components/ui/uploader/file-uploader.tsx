@@ -17,16 +17,18 @@ const FileUploader = () => {
     formData.append("file", selectedFile as Blob);
 
     const api = new FileApi();
-
     const headers = {
       "Content-Type": "multipart/form-data",
     };
 
     const response = await api.uploadFile(formData, headers);
-    const newFileRecord = response.data ?? null;
+    let newList = [state.fileList];
+    if (response.data) newList = [response.data, ...state.fileList];
+
+    console.log(newList);
     dispatch({
       type: FileActionType.updateFileList,
-      payload: { FileList: [...state.fileList, newFileRecord] },
+      payload: { fileList: newList },
     });
   };
 
@@ -37,11 +39,18 @@ const FileUploader = () => {
           Choose a file
         </label>
         <input
+          className="w-0.1 h-0.1 opacity-0 overflow-hidden absolute -z-1 inputfile cursor-pointer"
           id="file"
           type="file"
           accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv"
           onChange={handleFileChange}
         />
+        <label
+          htmlFor="file"
+          className="border-green-800 border text-center w-40 text-green-800 px-4 py-2 inline-block cursor-pointer rounded-lg font-semibold"
+        >
+          Choose a file
+        </label>
       </div>
       {selectedFile && (
         <section>
@@ -57,7 +66,7 @@ const FileUploader = () => {
       {selectedFile && (
         <button
           onClick={handleFileUpload}
-          className="rounded-lg bg-green-800 text-white px-4 py-2 border-none font-semibold"
+          className="rounded-lg bg-green-800 text-white px-4 py-2 border-none font-semibold w-40"
         >
           Upload the file
         </button>
