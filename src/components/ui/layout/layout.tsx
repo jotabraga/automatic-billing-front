@@ -7,6 +7,7 @@ import { DataTable } from "../table/data-table";
 import { columns } from "../table/colums";
 import { FileApi } from "@/hooks/useFileApi";
 import { useFileContext, FileActionType } from "@/hooks/useFileContext";
+import { ErrorBoundary } from "react-error-boundary";
 
 export function Layout(): ReactElement {
   const { state, dispatch } = useFileContext();
@@ -27,7 +28,7 @@ export function Layout(): ReactElement {
   }, []);
 
   return (
-    <>
+    <ErrorBoundary fallback={<p>⚠️Something went wrong</p>}>
       <main className="flex flex-col gap-8 items-center h-screen py-20">
         <a href="./" data-framer-page-link-current="true">
           <div
@@ -48,6 +49,6 @@ export function Layout(): ReactElement {
         <DataTable columns={columns} data={state.fileList} />
         <Outlet context={[state.fileList]} />
       </main>
-    </>
+    </ErrorBoundary>
   );
 }
