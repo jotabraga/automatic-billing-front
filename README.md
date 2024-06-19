@@ -1,4 +1,4 @@
-# kanastra-challenge-boilerplate
+# Automatic billing front-end
 
 ## Preview 👀
 
@@ -57,6 +57,6 @@ bun run dev
 `
     or
 
-        ```sh
-        npm run dev:node
-        ```
+            ```sh
+            npm run dev:node
+            ```
